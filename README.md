@@ -33,6 +33,6 @@ Just add interfaces from namespace `OpenFontWPFControls.FormattingStructure` for
 
 ### Virtualizing graphic
 
-At the moment only the `TextBox` is automatically virtualized when it is passed limited dimensions in `MeasureOverride` (not work if placed in the `StackPanel` or any unbounded control)
+At the moment only the `TextBox` is automatically virtualized when it is passed limited dimensions in `MeasureOverride` (not work if control placed in the `StackPanel` or any unbounded control)
 
 Drawing area can be bounded `OpenFontWPFControls.Controls.BaseTextControl.DrawingBounds` property
