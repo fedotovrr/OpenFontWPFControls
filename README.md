@@ -22,6 +22,8 @@ Scroll value is the glyph index of the first line in the view
 
 Scroll maximum is the chars count
 
+Scroll by pixels... maybe later
+
 ### StructuralTextViewer
 
 `OpenFontWPFControls.Controls.StructuralTextViewer` - Stylized text viewer
@@ -29,7 +31,7 @@ Scroll maximum is the chars count
 Just add interfaces from namespace `OpenFontWPFControls.FormattingStructure` for your structure or use an existing `OpenFontWPFControls.FormattingStructure.DefaultFormattingStructure` and set `FormattingStructure` property for `StructuralTextViewer`
 
 
-#### Virtualizing graphic
+### Virtualizing graphic
 
 At the moment only the `TextBox` is automatically virtualized when it is passed limited dimensions in `MeasureOverride` (not work if placed in the `StackPanel` or any unbounded control)
 
