@@ -20,6 +20,8 @@ Rendering by paragraph in view
 
 Scroll value is the glyph index of the first line in the view
 
+Scroll maximum is the chars count
+
 ### StructuralTextViewer
 
 `OpenFontWPFControls.Controls.StructuralTextViewer` - Stylized text viewer
