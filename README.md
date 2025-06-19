@@ -16,7 +16,7 @@ Full rendering and drawing
 
 `OpenFontWPFControls.Controls.TextBox` - Simple text writer
 
-Rendering paragraph in view
+Rendering by paragraph in view
 
 Scroll value is the glyph index of the first line in the view
 
