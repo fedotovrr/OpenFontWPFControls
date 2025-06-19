@@ -33,6 +33,6 @@ Just add interfaces from namespace `OpenFontWPFControls.FormattingStructure` for
 
 ### Bounds graphic
 
-At the moment only the `TextBox` is automatically bounded when it is passed limited dimensions in `MeasureOverride` (not work if control placed in the `StackPanel` or any unbounded control)
+At the moment only the `TextBox` is automatically bounded when it is passed limited dimensions in `MeasureOverride` (do not placed in the `StackPanel` or any unbounded control if you have a long text)
 
 Drawing area can be bounded `OpenFontWPFControls.Controls.BaseTextControl.DrawingBounds` property
