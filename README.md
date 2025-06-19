@@ -31,8 +31,8 @@ Scroll by pixels... maybe later
 Just add interfaces from namespace `OpenFontWPFControls.FormattingStructure` for your structure or use an existing `OpenFontWPFControls.FormattingStructure.DefaultFormattingStructure` and set `FormattingStructure` property for `StructuralTextViewer`
 
 
-### Virtualizing graphic
+### Bounds graphic
 
-At the moment only the `TextBox` is automatically virtualized when it is passed limited dimensions in `MeasureOverride` (not work if control placed in the `StackPanel` or any unbounded control)
+At the moment only the `TextBox` is automatically bounded when it is passed limited dimensions in `MeasureOverride` (not work if control placed in the `StackPanel` or any unbounded control)
 
 Drawing area can be bounded `OpenFontWPFControls.Controls.BaseTextControl.DrawingBounds` property
