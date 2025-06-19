@@ -365,7 +365,7 @@ namespace OpenFontWPFControls.Controls
                         GuidelineSet guidelines = new GuidelineSet();
                         guidelines.GuidelinesY.Add(offset + 0.5);
                         context.PushGuidelineSet(guidelines);
-                        context.DrawRectangle(DrawingGlyph.ErrorLineBrush, null, new Rect(x1, offset, x2, size * 2));
+                        context.DrawRectangle(DrawingGlyph.ErrorLineBrush, null, new Rect(x1, offset, x2 - x1, size * 2));
                         sl = false;
                     }
                 }
