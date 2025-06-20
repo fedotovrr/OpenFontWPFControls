@@ -45,9 +45,9 @@ namespace OpenFontWPFControls
                     Rect rect = gr.ComputeAlignmentBox();
                     GuidelineSet guidelines = new GuidelineSet();
                     guidelines.GuidelinesX.Add(Math.Round(rect.Left));
-                    guidelines.GuidelinesX.Add(Math.Round(rect.Right));
+                    //guidelines.GuidelinesX.Add(Math.Round(rect.Right));
                     guidelines.GuidelinesY.Add(Math.Round(rect.Top));
-                    guidelines.GuidelinesY.Add(Math.Round(rect.Bottom));
+                    //guidelines.GuidelinesY.Add(Math.Round(rect.Bottom));
                     dc.PushGuidelineSet(guidelines);
                     dc.DrawGlyphRun(br, gr);
                     dc.Pop();
