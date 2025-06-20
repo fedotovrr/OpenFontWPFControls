@@ -111,6 +111,7 @@ namespace OpenFontWPFControls.Controls
 
             _caretPoint.Owner = CaretPointOwners.Anyone;
             _caretPoint = _layout.CaretPointContains(_caretPoint.CharOffset) ? _caretPoint : _layout.LastCaretPoint;
+            _selectionCapture = _caretPoint;
             SetStartChar(_startCharOffset, false);
             _drawingValid = false;
 
