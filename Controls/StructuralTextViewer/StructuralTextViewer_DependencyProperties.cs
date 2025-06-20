@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace OpenFontWPFControls.Controls
 {
-    partial class StructuralTextViewer
+    partial class StructuralTextViewer : IWeakEventListener
     {
         public static readonly DependencyProperty FormattingStructureProperty =
             DependencyProperty.Register(
@@ -24,19 +24,23 @@ namespace OpenFontWPFControls.Controls
             {
                 if (e.OldValue is INotifyStructureChanged oldStructuralChanged)
                 {
-                    StructureChangedEventManager.RemoveHandler(oldStructuralChanged, o.StructureChanged);
+                    StructureChangedEventManager.RemoveListener(oldStructuralChanged, o);
                 }
 
                 if (e.NewValue is INotifyStructureChanged newStructuralChanged)
                 {
-                    StructureChangedEventManager.AddHandler(newStructuralChanged, o.StructureChanged);
+                    StructureChangedEventManager.AddListener(newStructuralChanged, o);
                 }
             }
         }
 
-        private void StructureChanged(object sender, StructureChangedEventArgs e)
+        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
-            _visualHost.Invalidate();
+            if (e is StructureChangedEventArgs)
+            {
+                _visualHost.Invalidate();
+            }
+            return true;
         }
     }
 }
