@@ -156,16 +156,45 @@ namespace OpenFontWPFControls.Controls
 
         private void UpdateContentLayer()
         {
-            _linesLayer.ForEach(child => RemoveVisualChild(child.Visual));
-            _linesLayer.Clear();
+            _linesLayer.ForEach(child => child.Valid = false);
             foreach (StructuralLine line in _layout.LinesInArea(_drawingBounds))
             {
-                ContainerDrawing container = new ContainerDrawing(line);
-                container.Visual.Offset = new Vector(Math.Round(line.XOffset), Math.Round(line.YOffset));
-                _linesLayer.Add(container);
-                AddVisualChild(container.Visual);
+                ContainerDrawing container = _linesLayer.FirstOrDefault(c => c.Source == line);
+                if (container != null)
+                {
+                    container.Valid = true;
+                    container.Visual.Offset = new Vector(Math.Round(line.XOffset), Math.Round(line.YOffset));
+                }
+                else
+                {
+                    container = new ContainerDrawing(line);
+                    container.Valid = true;
+                    container.Visual.Offset = new Vector(Math.Round(line.XOffset), Math.Round(line.YOffset));
+                    _linesLayer.Add(container);
+                    AddVisualChild(container.Visual);
+                }
             }
 
+            int count = 0;
+            for (int i = _linesLayer.Count - 1; i >= 0; i--)
+            {
+                if (!_linesLayer[i].Valid)
+                {
+                    count++;
+                    RemoveVisualChild(_linesLayer[i].Visual);
+                }
+                else if (count > 0)
+                {
+                    _linesLayer.RemoveRange(i + 1, count);
+                    count = 0;
+                }
+            }
+            if (count > 0)
+            {
+                _linesLayer.RemoveRange(0, count);
+            }
+
+            
             _graphicLayer.ForEach(child => RemoveVisualChild(child.Visual));
             _graphicLayer.Clear();
             foreach (StructuralBorder border in _layout.BordersInArea(_drawingBounds))
