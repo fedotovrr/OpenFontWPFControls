@@ -36,6 +36,12 @@ namespace OpenFontWPFControls.Layout
         {
             DrawingVisual visual = new DrawingVisual();
             DrawingContext context = visual.RenderOpen();
+
+            GuidelineSet guidelines = new GuidelineSet();
+            guidelines.GuidelinesX.Add(0);
+            guidelines.GuidelinesY.Add(0);
+            context.PushGuidelineSet(guidelines);
+
             foreach ((GlyphPoint glyph, float x) in GlyphPoints)
             {
                 DrawingGlyph.DrawGlyph(
@@ -49,8 +55,12 @@ namespace OpenFontWPFControls.Layout
                     Paragraph.TextLayout.Strike,
                     false,
                     x,
-                    0);
+                    0,
+                    false);
             }
+
+            context.Pop();
+
             context.Close();
             return visual;
         }
