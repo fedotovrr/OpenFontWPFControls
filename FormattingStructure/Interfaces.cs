@@ -6,7 +6,7 @@ namespace OpenFontWPFControls.FormattingStructure
 {
     public delegate void StructureChangedEventHandler(object sender, StructureChangedEventArgs e);
 
-    public class StructureChangedEventArgs
+    public class StructureChangedEventArgs : System.EventArgs
     {
         private readonly object _item;
 
