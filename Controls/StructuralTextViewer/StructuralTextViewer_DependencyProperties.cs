@@ -24,12 +24,12 @@ namespace OpenFontWPFControls.Controls
             {
                 if (e.OldValue is INotifyStructureChanged oldStructuralChanged)
                 {
-                    oldStructuralChanged.StructureChanged -= o.StructureChanged;
+                    StructureChangedEventManager.RemoveHandler(oldStructuralChanged, o.StructureChanged);
                 }
 
                 if (e.NewValue is INotifyStructureChanged newStructuralChanged)
                 {
-                    newStructuralChanged.StructureChanged += o.StructureChanged;
+                    StructureChangedEventManager.AddHandler(newStructuralChanged, o.StructureChanged);
                 }
             }
         }
