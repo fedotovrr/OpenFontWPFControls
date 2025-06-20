@@ -64,16 +64,22 @@ namespace OpenFontWPFControls.Layout
         {
             DrawingVisual visual = new DrawingVisual();
             DrawingContext context = visual.RenderOpen();
+
+            GuidelineSet guidelines = new GuidelineSet();
+            guidelines.GuidelinesX.Add(0);
+            guidelines.GuidelinesY.Add(0);
+            context.PushGuidelineSet(guidelines);
+
             foreach (GlyphInfo glyphInfo in GlyphPoints)
             {
                 float yOffset = glyphInfo.Glyph.GetPixelBaselineOffset(MaxFontSize) - glyphInfo.Glyph.GetPixelBaselineOffset(glyphInfo.Text.FontSize);
                 if (glyphInfo.Text.HitObject is IInlineImage img)
                 {
-                    GuidelineSet guidelines = new GuidelineSet();
-                    guidelines.GuidelinesY.Add(yOffset);
-                    guidelines.GuidelinesX.Add(glyphInfo.X);
-                    guidelines.GuidelinesX.Add(glyphInfo.X + img.Width);
-                    context.PushGuidelineSet(guidelines);
+                    GuidelineSet guidelinesImage = new GuidelineSet();
+                    guidelinesImage.GuidelinesY.Add(yOffset);
+                    guidelinesImage.GuidelinesX.Add(glyphInfo.X);
+                    guidelinesImage.GuidelinesX.Add(glyphInfo.X + img.Width);
+                    context.PushGuidelineSet(guidelinesImage);
                     context.DrawImage(img.Source, new Rect(new Point(glyphInfo.X, yOffset), new Size(img.Width, img.Height)));
                     context.Pop();
                 }
@@ -89,9 +95,13 @@ namespace OpenFontWPFControls.Layout
                         glyphInfo.Text.Strike,
                         false,
                         glyphInfo.X,
-                        yOffset);
+                        yOffset,
+                        false);
                 }
             }
+
+            context.Pop();
+
             context.Close();
             return visual;
         }
