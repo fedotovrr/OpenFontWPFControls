@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
@@ -20,7 +21,7 @@ namespace OpenFontWPFControls
         {
             DrawingGroup drawing = new DrawingGroup();
             using DrawingContext context = drawing.Open();
-            TextLayout data = new TextLayout(text, typefaceInfo, maxWidth, fontSize, pixelsPerDip, pixelsPerInchX);
+            LargeTextLayout data = new LargeTextLayout(text, typefaceInfo, maxWidth, fontSize, pixelsPerDip, pixelsPerInchX);
             foreach ((GlyphPoint glyph, float x) in data.GlyphPoints)
             {
                 DrawGlyph(context, glyph, data.FontSize, data.PixelsPerDip, data.Foreground, data.Underline, data.Strike, false, x, 0, setGuidelines);
@@ -113,8 +114,7 @@ namespace OpenFontWPFControls
                         colorTypeface.CPALTable.GetColor(cid, out byte r, out byte g, out byte b, out byte a);
                         yield return (
                             new GlyphRun(geometryTypeface, 0, false, fontSize, pixelsPerDip, new[] { subGid }, offset, new[] { 0.0 },
-                                null, null, null, null, null, null),
-                            new SolidColorBrush(Color.FromArgb(a, r, g, b)));
+                                null, null, null, null, null, null), new SolidColorBrush(Color.FromArgb(a, r, g, b)));
                     }
                 }
                 else
