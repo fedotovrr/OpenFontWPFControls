@@ -14,7 +14,11 @@ Full rendering and drawing
 
 ### TextBox
 
-`OpenFontWPFControls.Controls.TextBox` - Simple text writer
+`OpenFontWPFControls.Controls.TextBox` - Simple text writer, looks like a standard box
+
+### LargeTextBox
+
+`OpenFontWPFControls.Controls.LargeTextBox` - large text writer
 
 Rendering by paragraph in view
 
@@ -33,8 +37,6 @@ Just add interfaces from namespace `OpenFontWPFControls.FormattingStructure` for
 
 ### Bounds graphic
 
-At the moment only the `TextBox` is automatically bounded when it is passed limited dimensions in `MeasureOverride` (do not placed in the `StackPanel` or any unbounded control if you have a long text)
+When placing in the `StackPanel` or any unbounded control, drawing bounds do not work
 
-Drawing area can be bounded `OpenFontWPFControls.Controls.BaseTextControl.DrawingBounds` property
-
-Check parent on `System.Windows.Controls.Primitives.IScrollInfo`... maybe later
+Drawing area can be bounded `OpenFontWPFControls.Controls.BaseTextControl.DrawingBounds` property, need to change the type `PART_ContentHost` in the template from `ScrollViewer` to `ContentControl`
