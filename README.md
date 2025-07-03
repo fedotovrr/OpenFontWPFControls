@@ -26,8 +26,6 @@ Scroll value is the glyph index of the first line in the view
 
 Scroll maximum is the chars count
 
-Scroll by pixels... maybe later
-
 ### StructuralTextViewer
 
 `OpenFontWPFControls.Controls.StructuralTextViewer` - Stylized text viewer
