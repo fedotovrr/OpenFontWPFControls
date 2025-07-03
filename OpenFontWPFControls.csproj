@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -33,6 +33,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,6 +49,7 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.6.0\lib\net462\System.Numerics.Vectors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -64,31 +73,52 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Controls\BaseTextControl.cs" />
     <Compile Include="Controls\Caret.cs" />
+    <Compile Include="Controls\Infrastructure\ContainerUI.cs" />
     <Compile Include="Controls\Infrastructure\HitActionEventArgs.cs" />
+    <Compile Include="Controls\ItemsPanel\CollectionManager.cs" />
+    <Compile Include="Controls\ItemsPanel\PanelVisualContainer.cs" />
+    <Compile Include="Controls\ItemsPanel\IScrollValueContainer.cs" />
+    <Compile Include="Controls\ItemsPanel\ItemsPanel.cs" />
+    <Compile Include="Controls\ItemsPanel\ItemsPanelVisualHost.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextBox.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextBox_Commands.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextBox_ContextMenu.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextBox_DependencyProperties.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextBox_Editor.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextBox_Public.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextBox_Speller.cs" />
     <Compile Include="Controls\StructuralTextViewer\StructuralTextViewer_DependencyProperties.cs" />
     <Compile Include="Controls\StructuralTextViewer\StructuralTextViewer_Commands.cs" />
     <Compile Include="Controls\StructuralTextViewer\StructuralTextViewer_ContextMenu.cs" />
+    <Compile Include="Controls\StructuralTextViewer\StructuralTextVisualHost_IScrollInfo.cs" />
+    <Compile Include="Controls\TextBox\TextBox.cs" />
+    <Compile Include="Controls\TextBox\TextBox_Commands.cs" />
+    <Compile Include="Controls\TextBox\TextBox_ContextMenu.cs" />
     <Compile Include="Controls\TextBox\TextBox_DependencyProperties.cs" />
+    <Compile Include="Controls\TextBox\TextBox_Editor.cs" />
     <Compile Include="Controls\TextBox\TextBox_Public.cs" />
+    <Compile Include="Controls\TextBox\TextBox_Speller.cs" />
+    <Compile Include="Controls\TextVisualHost\TextVisualHost.cs" />
+    <Compile Include="Controls\TextVisualHost\TextVisualHost_IScrollInfo.cs" />
+    <Compile Include="Controls\TextVisualHost\TextVisualHost_RenderDraw.cs" />
+    <Compile Include="Controls\TextVisualHost\TextVisualHost_Selection.cs" />
+    <Compile Include="FormattingStructure\StructureChangedEventManager.cs" />
     <Compile Include="Controls\StructuralTextViewer\StructuralTextVisualHost_Selection.cs" />
     <Compile Include="Controls\StructuralTextViewer\StructuralTextVisualHost_Hits.cs" />
     <Compile Include="Controls\StructuralTextViewer\StructuralTextVisualHost_RenderDraw.cs" />
-    <Compile Include="Controls\TextVisualHost\TextVisualHost_ViewPoint.cs" />
-    <Compile Include="Controls\TextVisualHost\TextVisualHost_RenderDraw.cs" />
-    <Compile Include="Controls\TextVisualHost\TextVisualHost_Selection.cs" />
-    <Compile Include="Layout\FormattingStructureLayout\AreasTable.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextVisualHost_ViewPoint.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextVisualHost_RenderDraw.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextVisualHost_Selection.cs" />
+    <Compile Include="Layout\Infrastructure\AreasTable.cs" />
     <Compile Include="Layout\FormattingStructureLayout\GlyphInfo.cs" />
-    <Compile Include="Layout\FormattingStructureLayout\IPlacement.cs" />
+    <Compile Include="Layout\Infrastructure\IPlacement.cs" />
     <Compile Include="Layout\FormattingStructureLayout\HitBox.cs" />
     <Compile Include="Layout\FormattingStructureLayout\StructuralBorder.cs" />
-    <Compile Include="Layout\IVisualGenerator.cs" />
+    <Compile Include="Layout\Infrastructure\IVisualGenerator.cs" />
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Controls\StructuralTextViewer\StructuralTextViewer.cs" />
-    <Compile Include="Controls\TextBox\TextBox_ContextMenu.cs" />
-    <Compile Include="Controls\TextBox\TextBox_Editor.cs" />
-    <Compile Include="Controls\TextBox\TextBox_Speller.cs" />
     <Compile Include="Controls\StructuralTextViewer\StructuralTextVisualHost.cs" />
-    <Compile Include="Controls\TextVisualHost\TextVisualHost.cs" />
+    <Compile Include="Controls\LargeTextBox\LargeTextVisualHost.cs" />
     <Compile Include="FormattingStructure\Default.cs" />
     <Compile Include="Layout\FormattingStructureLayout\StructuralContainer.cs" />
     <Compile Include="Layout\FormattingStructureLayout\StructuralLayoutLogic.cs" />
@@ -103,35 +133,33 @@
     <Compile Include="Layout\GlyphLayout\GlyphLayoutBuilder_GlyphPosition.cs" />
     <Compile Include="Layout\GlyphLayout\GlyphLayoutBuilder_GlyphSubstitution.cs" />
     <Compile Include="Layout\GlyphLayout\TypefaceInfo.cs" />
-    <Compile Include="Layout\TextLayout\CaretPoint.cs" />
-    <Compile Include="Layout\TextLayout\CharacterBufferRange.cs" />
+    <Compile Include="Layout\LargeTextLayout\LargeCaretPoint.cs" />
+    <Compile Include="Layout\Infrastructure\CharacterBufferRange.cs" />
     <Compile Include="Layout\FormattingStructureLayout\StructuralCaretPoint.cs" />
-    <Compile Include="Layout\TextLayout\TextLayout.cs" />
-    <Compile Include="Layout\TextLayout\TextLayoutLogic.cs" />
-    <Compile Include="Layout\TextLayout\TextLine.cs" />
+    <Compile Include="Layout\LargeTextLayout\LargeTextLayout.cs" />
+    <Compile Include="Layout\BaseTextLayoutLogic\ParagraphInfo.cs" />
+    <Compile Include="Layout\BaseTextLayoutLogic\LineInfo.cs" />
+    <Compile Include="Layout\BaseTextLayoutLogic\TextLayoutLogic.cs" />
+    <Compile Include="Layout\LargeTextLayout\LargeTextLine.cs" />
     <Compile Include="Controls\Infrastructure\ContainerDrawing.cs" />
-    <Compile Include="Layout\TextLayout\TextParagraph.cs" />
+    <Compile Include="Layout\LargeTextLayout\LargeTextParagraph.cs" />
     <Compile Include="EmojiInfo.cs" />
-    <Compile Include="SpellCheckAPI.cs" />
-    <Compile Include="Speller.cs" />
-    <Compile Include="Controls\StructuralTextViewer\StructuralTextViewer_Public.cs" />
-    <Compile Include="Controls\TextBox\TextBox.cs" />
-    <Compile Include="Controls\TextBox\TextBox_Commands.cs" />
-    <Compile Include="Controls\Infrastructure\UndoRedoBuffer.cs" />
-    <Compile Include="FormattingStructure\Interfaces.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Layout\SimpleTextLayout\SimpleTextLayout.cs" />
+    <Compile Include="Layout\SimpleTextLayout\SimpleTextLine.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    <Compile Include="SpellCheckAPI.cs" />
+    <Compile Include="Speller.cs" />
+    <Compile Include="Controls\StructuralTextViewer\StructuralTextViewer_Public.cs" />
+    <Compile Include="Controls\Infrastructure\UndoRedoBuffer.cs" />
+    <Compile Include="FormattingStructure\Interfaces.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\Infrastructure\StaticHelper.cs" />
     <Compile Include="Typography.OpenFont\ScriptLang.cs" />
     <Compile Include="Typography.OpenFont\AdditionalInfo\AdobeGlyphList.cs" />
     <Compile Include="Typography.OpenFont\AdditionalInfo\AdobeGlyphListForNewFont.cs" />
@@ -219,18 +247,16 @@
     <Compile Include="Typography.OpenFont\Typeface_TrimableExtensions.cs" />
     <Compile Include="Typography.OpenFont\WebFont\Woff2Reader.cs" />
     <Compile Include="Typography.OpenFont\WebFont\WoffReader.cs" />
-    <None Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\EmojiList.txt" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EmojiList.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
