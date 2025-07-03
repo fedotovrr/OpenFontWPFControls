@@ -39,4 +39,4 @@ Just add interfaces from namespace `OpenFontWPFControls.FormattingStructure` for
 
 When placing in the `StackPanel` or any unbounded control, drawing bounds do not work
 
-Drawing area can be bounded `OpenFontWPFControls.Controls.BaseTextControl.DrawingBounds` property, need to change the type `PART_ContentHost` in the template from `ScrollViewer` to `ContentControl`
+Drawing area can be bounded `OpenFontWPFControls.Controls.BaseTextControl.DrawingBounds` property. See example unlimited panel `OpenFontWPFControls.Controls.ItemsPanel` (need to change the type `PART_ContentHost` in the template from `ScrollViewer` to `ContentControl`)
