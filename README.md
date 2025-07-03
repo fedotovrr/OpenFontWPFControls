@@ -18,7 +18,7 @@ Full rendering and drawing
 
 ### LargeTextBox
 
-`OpenFontWPFControls.Controls.LargeTextBox` - large text writer
+`OpenFontWPFControls.Controls.LargeTextBox` - Large text writer
 
 Rendering by paragraph in view
 
