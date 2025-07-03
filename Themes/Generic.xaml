@@ -1,0 +1,253 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sd="clr-namespace:OpenFontWPFControls.Controls">
+    <!--#region TextBox-->
+
+    <ControlTemplate x:Key="DefaultTextBoxControlTemplate"
+                     TargetType="{x:Type sd:TextBox}">
+        <Border x:Name="border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <ScrollViewer x:Name="PART_ContentHost"
+                          Margin="{TemplateBinding Padding}"
+                          CanContentScroll="True"
+                          ClipToBounds="True"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto" />
+        </Border>
+        <ControlTemplate.Triggers>
+
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="LightGray" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="border" Property="BorderBrush" Value="LightGray" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="border" Property="BorderBrush" Value="CornflowerBlue" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="true">
+                <Setter TargetName="border" Property="BorderBrush" Value="CornflowerBlue" />
+            </Trigger>
+
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type sd:TextBox}">
+        <Setter Property="TextTrimming" Value="None" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Padding" Value="2 0 2 0" />
+        <Setter Property="Template" Value="{StaticResource DefaultTextBoxControlTemplate}" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region LargeTextBox-->
+
+    <ControlTemplate x:Key="DefaultLargeTextBoxControlTemplate"
+                     TargetType="{x:Type sd:LargeTextBox}">
+        <Border x:Name="border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ContentPresenter x:Name="PART_ContentHost"
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top"
+                                  ClipToBounds="True"
+                                  Cursor="IBeam" />
+                <ScrollBar x:Name="PART_VerticalScroll"
+                           Grid.Row="0"
+                           Grid.Column="1"
+                           Orientation="Vertical" />
+                <ScrollBar x:Name="PART_HorizontalScroll"
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Orientation="Horizontal" />
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="LightGray" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="border" Property="BorderBrush" Value="LightGray" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="border" Property="BorderBrush" Value="CornflowerBlue" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="true">
+                <Setter TargetName="border" Property="BorderBrush" Value="CornflowerBlue" />
+            </Trigger>
+
+            <Trigger Property="TextTrimming" Value="CharacterEllipsis">
+                <Setter TargetName="PART_HorizontalScroll" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="TextTrimming" Value="WordEllipsis">
+                <Setter TargetName="PART_HorizontalScroll" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <!--<DataTrigger Binding="{Binding ElementName=PART_HorizontalScroll, Path=Maximum}"
+                         Value="0">
+                <Setter TargetName="PART_HorizontalScroll" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>-->
+
+            <Trigger Property="CanVerticalScroll" Value="false">
+                <Setter TargetName="PART_VerticalScroll" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <!--<DataTrigger Binding="{Binding ElementName=PART_VerticalScroll, Path=Maximum}"
+                         Value="0">
+                <Setter TargetName="PART_VerticalScroll" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>-->
+
+            <Trigger Property="CanHorizontalScroll" Value="false">
+                <Setter TargetName="PART_HorizontalScroll" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type sd:LargeTextBox}">
+        <Setter Property="TextTrimming" Value="None" />
+        <Setter Property="CanVerticalScroll" Value="True" />
+        <Setter Property="CanHorizontalScroll" Value="True" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Padding" Value="2 0 2 0" />
+        <Setter Property="Template" Value="{StaticResource DefaultLargeTextBoxControlTemplate}" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Lebel-->
+
+    <ControlTemplate x:Key="DefaultLabelControlTemplate"
+                     TargetType="{x:Type sd:Label}">
+        <ContentPresenter x:Name="PART_ContentHost"
+                          ClipToBounds="True" />
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="LightGray" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type sd:Label}">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource DefaultLabelControlTemplate}" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region StructuralTextViewer-->
+
+    <ControlTemplate x:Key="DefaultStructuralTextViewerControlTemplate"
+                     TargetType="{x:Type sd:StructuralTextViewer}">
+        <Border Padding="{TemplateBinding Padding}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <ScrollViewer x:Name="PART_ContentHost"
+                          CanContentScroll="True"
+                          ClipToBounds="True"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="LightGray" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type sd:StructuralTextViewer}">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Template" Value="{StaticResource DefaultStructuralTextViewerControlTemplate}" />
+    </Style>
+
+
+    <Style TargetType="{x:Type sd:Caret}">
+        <Setter Property="Width" Value="1" />
+        <Setter Property="CaretBrush" Value="Black" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type sd:Caret}">
+                    <Rectangle Fill="{TemplateBinding CaretBrush}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region ItemsPanel-->
+
+    <ControlTemplate x:Key="ItemsPanelControlTemplate"
+                     TargetType="{x:Type sd:ItemsPanel}">
+        <Grid Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ContentPresenter x:Name="PART_ContentHost"
+                              Grid.Column="0"
+                              ClipToBounds="True" />
+            <ScrollBar x:Name="PART_VerticalScrollBar"
+                       Grid.Column="1"
+                       Orientation="Vertical"
+                       RenderTransformOrigin="0.5 0.5" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Inverse" Value="True">
+                <Setter TargetName="PART_VerticalScrollBar" Property="RenderTransform">
+                    <Setter.Value>
+                        <RotateTransform Angle="180" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <DataTemplate x:Key="ItemsPanelItemTemplate">
+        <Grid Background="Transparent">
+            <TextBlock Text="{Binding}" />
+        </Grid>
+    </DataTemplate>
+
+    <Style TargetType="{x:Type sd:ItemsPanel}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template" Value="{StaticResource ItemsPanelControlTemplate}" />
+        <Setter Property="ItemTemplate" Value="{StaticResource ItemsPanelItemTemplate}" />
+    </Style>
+
+    <!--#endregion-->
+
+</ResourceDictionary>
