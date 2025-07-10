@@ -22,11 +22,9 @@ Full rendering and drawing
 
 `OpenFontWPFControls.Controls.LargeTextBox` - Large text writer
 
-Rendering by paragraph in view
-
-Scroll value is the char index of the first line in the view
-
-Scroll maximum is the chars count
+- Rendering by paragraph in view
+- Scroll value is the char index of the first line in the view
+- Scroll maximum is the chars count
 
 ### StructuralTextViewer
 
