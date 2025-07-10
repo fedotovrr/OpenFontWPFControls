@@ -32,6 +32,7 @@ Full rendering and drawing
 
 Just add interfaces from namespace `OpenFontWPFControls.FormattingStructure` for your structure or use an existing `OpenFontWPFControls.FormattingStructure.DefaultFormattingStructure` and set `FormattingStructure` property for `StructuralTextViewer`.
 
+![image](https://github.com/fedotovrr/OpenFontWPFControls/blob/main/StructuralTextViewerPreview.png)
 
 ### Bounds graphic
 
