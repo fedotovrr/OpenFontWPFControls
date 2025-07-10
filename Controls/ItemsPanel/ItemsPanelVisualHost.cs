@@ -433,7 +433,6 @@ namespace OpenFontWPFControls.Controls
             for (int i = _containersCount; i < _containers.Length; i++)
             {
                 RemoveVisualChild(_containers[i].Visual);
-                RemoveLogicalChild(_containers[i].Control);
                 _containers[i].SetContext(null, -1);
             }
         }
@@ -450,9 +449,9 @@ namespace OpenFontWPFControls.Controls
                     panelVisualContainer = new PanelVisualContainer(ItemTemplate?.LoadContent() as FrameworkElement);
                     Array.Resize(ref _containers, _containers.Length + 1);
                     _containers[_containers.Length - 1] = panelVisualContainer;
+                    AddLogicalChild(panelVisualContainer.Control);
                 }
                 AddVisualChild(panelVisualContainer.Visual);
-                AddLogicalChild(panelVisualContainer.Control);
             }
             panelVisualContainer.Placed = true;
 
