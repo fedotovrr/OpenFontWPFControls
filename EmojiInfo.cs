@@ -76,7 +76,7 @@ namespace OpenFontWPFControls
                     return null;
                 }
             }
-            return CacheEmoji[value] as IEmojiItem;
+            return CacheEmoji.TryGetValue(value, out IEmojiItem item) ? item : null;
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace OpenFontWPFControls
                         }
                         while (length > 0)
                         {
-                            if (CacheEmoji[value.Substring(index, length)] is IEmojiItem o)
+                            if (CacheEmoji.TryGetValue(value.Substring(index, length), out IEmojiItem o))
                             {
                                 yield return (index, o);
                                 index += length;
