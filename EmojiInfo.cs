@@ -19,7 +19,7 @@ namespace OpenFontWPFControls
         private static readonly int MinChar = int.MaxValue;
         private static readonly int MaxChar = int.MinValue;
         private static readonly List<HashChars> CacheChars = new List<HashChars>();
-        private static readonly Hashtable CacheEmoji = new Hashtable();
+        private static readonly Dictionary<string, IEmojiItem> CacheEmoji = new Dictionary<string, IEmojiItem>();
         private static readonly List<IEmojiItem> _collection;
 
         static EmojiInfo()
