@@ -121,7 +121,7 @@ namespace OpenFontWPFControls.Layout
 
         private void PropertySetter<T>(ref T field, T value, Action callback = null)
         {
-            if (!field.Equals(value))
+            if (!EqualityComparer<T>.Default.Equals(field, value))
             {
                 field = value;
                 UpdateLines();
