@@ -143,7 +143,7 @@ namespace OpenFontWPFControls.Layout
 
         private void PropertySetter<T>(ref T field, T value)
         {
-            //if (!field.Equals(value))
+            //if (!EqualityComparer<T>.Default.Equals(field, value))
             {
                 field = value;
                 _glyphPoints = null;
