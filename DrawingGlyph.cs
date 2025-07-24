@@ -31,6 +31,7 @@ namespace OpenFontWPFControls
 
         public static void DrawGlyph(this DrawingContext dc, GlyphPoint glyph, float fontSize, float pixelsPerDip, Brush defaultForeground, bool underline, bool strike, bool errorLine, float x, float y = 0, bool setGuidelines = true)
         {
+            Point place = new Point(x + glyph.GetPixelOffsetX(fontSize), y + glyph.GetPixelBaselineOffset(fontSize));
             foreach ((GlyphRun gr, Brush br) in
                      GetGlyphRun(
                          glyph.GlyphLayoutBuilder.GlyphTypeface,
@@ -39,15 +40,17 @@ namespace OpenFontWPFControls
                          fontSize,
                          pixelsPerDip,
                          defaultForeground,
-                         new Point(x + glyph.GetPixelOffsetX(fontSize), y + glyph.GetPixelBaselineOffset(fontSize))))
+                         place))
             {
                 if (setGuidelines)
                 {
-                    Rect rect = gr.ComputeAlignmentBox();
+                    //Rect rect = gr.ComputeAlignmentBox();
                     GuidelineSet guidelines = new GuidelineSet();
-                    guidelines.GuidelinesX.Add(Math.Round(rect.Left));
+                    guidelines.GuidelinesX.Add(place.X);
+                    guidelines.GuidelinesY.Add(place.Y);
+                    //guidelines.GuidelinesX.Add(Math.Round(rect.Left));
                     //guidelines.GuidelinesX.Add(Math.Round(rect.Right));
-                    guidelines.GuidelinesY.Add(Math.Round(rect.Top));
+                    //guidelines.GuidelinesY.Add(Math.Round(rect.Top));
                     //guidelines.GuidelinesY.Add(Math.Round(rect.Bottom));
                     dc.PushGuidelineSet(guidelines);
                     dc.DrawGlyphRun(br, gr);
