@@ -85,10 +85,10 @@ namespace OpenFontWPFControls.Layout
             DrawingVisual visual = new DrawingVisual();
             DrawingContext context = visual.RenderOpen();
 
-            GuidelineSet guidelines = new GuidelineSet();
-            guidelines.GuidelinesX.Add(0);
-            guidelines.GuidelinesY.Add(0);
-            context.PushGuidelineSet(guidelines);
+            //GuidelineSet guidelines = new GuidelineSet();
+            //guidelines.GuidelinesX.Add(0);
+            //guidelines.GuidelinesY.Add(0);
+            //context.PushGuidelineSet(guidelines);
 
             foreach (GlyphInfo glyphInfo in GlyphPoints)
             {
@@ -117,11 +117,11 @@ namespace OpenFontWPFControls.Layout
                         false,
                         glyphInfo.X,
                         yOffset,
-                        false);
+                        true);
                 }
             }
 
-            context.Pop();
+            //context.Pop();
 
             context.Close();
             return visual;
