@@ -47,7 +47,7 @@ namespace OpenFontWPFControls.Layout
 
             GuidelineSet guidelines = new GuidelineSet();
             guidelines.GuidelinesX.Add(0);
-            guidelines.GuidelinesY.Add(0);
+            guidelines.GuidelinesY.Add(Paragraph.TextLayout.TypefaceInfo.DefaultBuilder.Typeface.ClipedAscender / (float)Paragraph.TextLayout.TypefaceInfo.DefaultBuilder.Typeface.UnitsPerEm * Paragraph.TextLayout.FontSize);
             context.PushGuidelineSet(guidelines);
 
             foreach ((GlyphPoint glyph, float x) in GlyphPoints)
