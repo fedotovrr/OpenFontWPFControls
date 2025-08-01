@@ -82,7 +82,7 @@ namespace OpenFontWPFControls.Layout
             {
                 int limit = GlyphOffset + GlyphCount;
                 for (int i = GlyphOffset; i < limit; i++)
-                    yield return Paragraph.GlyphsLayout.GlyphPoints[i];
+                    yield return Paragraph.GlyphsLayout[i];
             }
         }
 
@@ -92,7 +92,7 @@ namespace OpenFontWPFControls.Layout
             {
                 int limit = GlyphOffset + GlyphCount;
                 for (int i = limit - 1; i >= GlyphOffset; i--)
-                    yield return Paragraph.GlyphsLayout.GlyphPoints[i];
+                    yield return Paragraph.GlyphsLayout[i];
             }
         }
 

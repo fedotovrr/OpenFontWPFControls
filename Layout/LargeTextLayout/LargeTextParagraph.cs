@@ -11,7 +11,7 @@ namespace OpenFontWPFControls.Layout
         private int _charOffset;
 
         private bool _valid;
-        private GlyphLayout _glyphsLayout;
+        private GlyphPoint[] _glyphsLayout;
         private List<LargeTextLine> _lines;
 
         
@@ -42,7 +42,7 @@ namespace OpenFontWPFControls.Layout
 
         public bool Valid => _valid;
 
-        public GlyphLayout GlyphsLayout => _glyphsLayout;
+        public GlyphPoint[] GlyphsLayout => _glyphsLayout;
 
         public StringCharacterBuffer GetBuffer() => new StringCharacterBuffer(TextLayout.Text, _charOffset, _charCount);
 
@@ -66,7 +66,7 @@ namespace OpenFontWPFControls.Layout
                 _glyphsLayout = TextLayout.TypefaceInfo.GetGlyphLayout(GetBuffer());
                 _lines = TextLayout.MaxWidth > 0 ?
                     TextLayoutLogic.GetLines(
-                            glyphs:   GlyphsLayout.GlyphPoints,
+                            glyphs:   GlyphsLayout,
                             text:     GetBuffer(),
                             trimming: TextLayout.TextTrimming,
                             maxWidth: TextLayout.MaxWidth,
