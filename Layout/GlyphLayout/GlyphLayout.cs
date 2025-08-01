@@ -1,78 +1,83 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Typography.OpenFont;
 using Typography.OpenFont.Tables;
 
 namespace OpenFontWPFControls.Layout
 {
-    public class GlyphLayout : IGlyphIndexList, IGlyphPositions
+    public class GlyphLayout : HoleyCollection<GlyphPoint>, IGlyphIndexList, IGlyphPositions
     {
-        public List<GlyphPoint> GlyphPoints; // todo try replace with fast structure
-
-        public GlyphLayout(int maxLength)
+        public GlyphLayout(int maxLength) : base(maxLength)
         {
-            GlyphPoints = new List<GlyphPoint>(maxLength);
+
         }
 
-        int IGlyphIndexList.Count => GlyphPoints.Count;
 
-        ushort IGlyphIndexList.this[int index] => GlyphPoints[index].GlyphIndex;
+        // IGlyphIndexList
+
+        int IGlyphIndexList.Count => this.Count;
+
+        ushort IGlyphIndexList.this[int index] => this[index].GlyphIndex;
 
         void IGlyphIndexList.Replace(int index, ushort newGlyphIndex)
         {
-            GlyphPoints[index] = new GlyphPoint(newGlyphIndex, GlyphPoints[index].CharOffset);
+            //GlyphPoints[index] = new GlyphPoint(newGlyphIndex, GlyphPoints[index].CharOffset);
+            this.Replace(index, new GlyphPoint(newGlyphIndex, this[index].CharOffset));
         }
 
         void IGlyphIndexList.Replace(int index, int removeLen, ushort newGlyphIndex)
         {
-            GlyphPoints[index] = new GlyphPoint(newGlyphIndex, GlyphPoints[index].CharOffset);
-            GlyphPoints.RemoveRange(index + 1, removeLen - 1);
+            //GlyphPoints[index] = new GlyphPoint(newGlyphIndex, GlyphPoints[index].CharOffset);
+            //GlyphPoints.RemoveRange(index + 1, removeLen - 1);
+            this.Replace(index, removeLen, new GlyphPoint(newGlyphIndex, this[index].CharOffset));
         }
 
         void IGlyphIndexList.Replace(int index, ushort[] newGlyphIndices)
         {
-            GlyphPoints[index] = new GlyphPoint(newGlyphIndices[0], GlyphPoints[index].CharOffset);
-            GlyphPoints.InsertRange(index + 1, newGlyphIndices.Skip(1).Select(i => new GlyphPoint(i, GlyphPoints[index].CharOffset)));
+            //GlyphPoints[index] = new GlyphPoint(newGlyphIndices[0], GlyphPoints[index].CharOffset);
+            //GlyphPoints.InsertRange(index + 1, newGlyphIndices.Skip(1).Select(i => new GlyphPoint(i, GlyphPoints[index].CharOffset)));
+            this.Replace(index, 1, newGlyphIndices.Select(i => new GlyphPoint(i, this[index].CharOffset)).ToArray());
         }
 
 
-        int IGlyphPositions.Count => GlyphPoints.Count;
+        // IGlyphPositions
+
+        int IGlyphPositions.Count => this.Count;
 
         GlyphClassKind IGlyphPositions.GetGlyphClassKind(int index)
         {
-            return GlyphPoints[index].GlyphLayoutBuilder.Typeface.GetGlyph(GlyphPoints[index].GlyphIndex).GlyphClass;
+            return this[index].GlyphLayoutBuilder.Typeface.GetGlyph(this[index].GlyphIndex).GlyphClass;
         }
 
         void IGlyphPositions.AppendGlyphOffset(int index, short appendOffsetX, short appendOffsetY)
         {
-            GlyphPoints[index].GlyphOffsetX += appendOffsetX;
-            GlyphPoints[index].GlyphOffsetY += appendOffsetY;
+            this[index].GlyphOffsetX += appendOffsetX;
+            this[index].GlyphOffsetY += appendOffsetY;
         }
 
         void IGlyphPositions.AppendGlyphAdvance(int index, short appendAdvX, short appendAdvY)
         {
-            GlyphPoints[index].Width += appendAdvX;
+            this[index].Width += appendAdvX;
         }
 
         ushort IGlyphPositions.GetGlyph(int index, out short advW)
         {
-            advW = GlyphPoints[index].Width;
-            return GlyphPoints[index].GlyphIndex;
+            advW = this[index].Width;
+            return this[index].GlyphIndex;
         }
 
         ushort IGlyphPositions.GetGlyph(int index, out ushort inputOffset, out short offsetX, out short offsetY, out short advW)
         {
             inputOffset = 0; //non use
-            offsetX = GlyphPoints[index].GlyphOffsetX;
-            offsetY = GlyphPoints[index].GlyphOffsetY;
-            advW = GlyphPoints[index].Width;
-            return GlyphPoints[index].GlyphIndex;
+            offsetX = this[index].GlyphOffsetX;
+            offsetY = this[index].GlyphOffsetY;
+            advW = this[index].Width;
+            return this[index].GlyphIndex;
         }
 
         void IGlyphPositions.GetOffset(int index, out short offsetX, out short offsetY)
         {
-            offsetX = GlyphPoints[index].GlyphOffsetX;
-            offsetY = GlyphPoints[index].GlyphOffsetY;
+            offsetX = this[index].GlyphOffsetX;
+            offsetY = this[index].GlyphOffsetY;
         }
     }
 }

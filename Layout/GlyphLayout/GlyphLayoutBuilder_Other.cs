@@ -5,16 +5,28 @@ namespace OpenFontWPFControls.Layout
     public partial class GlyphLayoutBuilder
     {
         private GlyphPoint _spaceGlyph;
+        private GlyphPoint _tabGlyph;
+        private GlyphPoint _emptyGlyph;
 
         public System.Windows.Media.GlyphTypeface GlyphTypeface { get; set; }
 
         public GlyphPoint SpaceGlyph => _spaceGlyph;
 
+        public GlyphPoint TabGlyph => _tabGlyph;
+
+        public GlyphPoint EmptyGlyph => _emptyGlyph;
 
         private void InitTools()
         {
-            _spaceGlyph = Build(new StringCharacterBuffer(" ")).GlyphPoints.First();
+            GlyphLayout layout = Build(new StringCharacterBuffer(" "));
+            _spaceGlyph = layout[0];
             _spaceGlyph.GlyphLayoutBuilder = this;
+
+            _tabGlyph = new GlyphPoint(_spaceGlyph.GlyphIndex, 0, (short)(_spaceGlyph.Width * 4), _spaceGlyph.GlyphOffsetX, _spaceGlyph.GlyphOffsetY);
+            _tabGlyph.GlyphLayoutBuilder = this;
+
+            _emptyGlyph = new GlyphPoint(_spaceGlyph.GlyphIndex, 0, 0, _spaceGlyph.GlyphOffsetX, _spaceGlyph.GlyphOffsetY);
+            _emptyGlyph.GlyphLayoutBuilder = this;
         }
 
         // Tools

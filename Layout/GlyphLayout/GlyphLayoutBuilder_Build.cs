@@ -54,9 +54,9 @@ namespace OpenFontWPFControls.Layout
             GlyphLayout data = new GlyphLayout(chars.Length);
             if (chars.Length > 0)
             {
-                FillGlyphIndexes(chars, data.GlyphPoints);
+                FillGlyphIndexes(chars, data);
                 DoSubstitution(data);
-                foreach (GlyphPoint point in data.GlyphPoints)
+                foreach (GlyphPoint point in data)
                 {
                     Glyph glyph = _typeface.GetGlyph(point.GlyphIndex);
                     if (!Glyph.HasOriginalAdvancedWidth(glyph))
@@ -72,7 +72,7 @@ namespace OpenFontWPFControls.Layout
             return data;
         }
 
-        private void FillGlyphIndexes(CharacterBuffer chars, ICollection<GlyphPoint> buffer)
+        private void FillGlyphIndexes(CharacterBuffer chars, GlyphLayout buffer)
         {
             bool skipNextCodepoint;
             ushort glyphIndex;
@@ -131,9 +131,9 @@ namespace OpenFontWPFControls.Layout
                 {
                     float noneSigCorrection = 0.33f / _typeface.CalculateScaleToPixelFromPointSize(8);
                     short lastCorrection = 0;
-                    for (int i = 0; i < data.GlyphPoints.Count; ++i)
+                    for (int i = 0; i < data.Count; ++i)
                     {
-                        Glyph glyph = _typeface.GetGlyph(data.GlyphPoints[i].GlyphIndex);
+                        Glyph glyph = _typeface.GetGlyph(data[i].GlyphIndex);
                         if (glyph?.MathGlyphInfo?.ItalicCorrection is Typography.OpenFont.MathGlyphs.MathValueRecord value && value.Value > noneSigCorrection)
                         {
                             lastCorrection = value.Value;

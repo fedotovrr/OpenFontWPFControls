@@ -32,7 +32,6 @@
         public float GetPixelWidth(float fontSize) =>
             Width / (float)GlyphLayoutBuilder.Typeface.UnitsPerEm * fontSize;
 
-
         public override string ToString() => $"CharOffset: {CharOffset:0000} GlyphIndex: {GlyphIndex:0000}";
     }
 }
