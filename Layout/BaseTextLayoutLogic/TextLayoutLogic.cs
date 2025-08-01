@@ -32,7 +32,7 @@ namespace OpenFontWPFControls.Layout
 
         public static GlyphPoint[] GetGlyphPoints(this TypefaceInfo info, CharacterBuffer chars)
         {
-            List<GlyphLayout> lines = new List<GlyphLayout>();
+            List<GlyphPoint[]> lines = new List<GlyphPoint[]>();
             int startIndex = 0;
             int charsCount = 0;
             for (int i = 0; i < chars.Length; i++)
@@ -50,31 +50,47 @@ namespace OpenFontWPFControls.Layout
                 AddLine();
             }
 
-            GlyphPoint[] result = new GlyphPoint[lines.Sum(x => x.GlyphPoints.Count)];
+            GlyphPoint[] result = new GlyphPoint[lines.Sum(x => x.Length)];
             int offset = 0;
             for (int i = 0; i < lines.Count; i++)
             {
-                lines[i].GlyphPoints.CopyTo(result, offset);
-                offset += lines[i].GlyphPoints.Count;
+                lines[i].CopyTo(result, offset);
+                offset += lines[i].Length;
             }
 
             return result;
 
             void AddLine()
             {
-                GlyphLayout layout = GetGlyphLayout(info, chars.GetSubBuffer(startIndex, charsCount));
-                layout.GlyphPoints.ForEach(x => x.CharOffset += startIndex);
+                GlyphPoint[] layout = GetGlyphLayout(info, chars.GetSubBuffer(startIndex, charsCount));
+                foreach (GlyphPoint glyph in layout)
+                {
+                    glyph.CharOffset += startIndex;
+                }
                 lines.Add(layout);
             }
         }
 
-        public static GlyphLayout GetGlyphLayout(this TypefaceInfo info, CharacterBuffer chars)
+        public static GlyphPoint[] GetGlyphLayout(this TypefaceInfo info, CharacterBuffer chars, bool hideEmptyGlyph = false)
         {
             GlyphLayout data = info.DefaultBuilder.Build(chars);
-            int index = data.GlyphPoints.Count - 1;
+            int index = data.Count - 1;
             while (index >= 0)
             {
-                if (data.GlyphPoints[index].GlyphIndex == 0)
+                if (chars[data[index].CharOffset] == '\t')
+                {
+                    // replace tabs with space width
+                    data.Replace(index, new GlyphPoint
+                    (
+                        glyphIndex: info.DefaultBuilder.TabGlyph.GlyphIndex,
+                        charOffset: data[index].CharOffset,
+                        width: info.DefaultBuilder.TabGlyph.Width,
+                        glyphOffsetX: info.DefaultBuilder.TabGlyph.GlyphOffsetX,
+                        glyphOffsetY: info.DefaultBuilder.TabGlyph.GlyphOffsetY,
+                        glyphLayoutBuilder: info.DefaultBuilder
+                    ));
+                }
+                else if (data[index].GlyphIndex == 0)
                 {
                     // try replace empty glyph with extension
                     if (info.ExtensionBuilder != null)
@@ -83,7 +99,7 @@ namespace OpenFontWPFControls.Layout
                         index--;
                         while (index >= 0)
                         {
-                            if (data.GlyphPoints[index].GlyphIndex != 0 && chars[data.GlyphPoints[index].CharOffset] != TypefaceInfo.ZwjChar)
+                            if (data[index].GlyphIndex != 0 && chars[data[index].CharOffset] != TypefaceInfo.ZwjChar)
                             {
                                 index++;
                                 break;
@@ -94,61 +110,78 @@ namespace OpenFontWPFControls.Layout
                         index = index < 0 ? 0 : index;
                         GlyphLayout extensionGlyphs = info.ExtensionBuilder.Build(
                             chars.GetSubBuffer(
-                                data.GlyphPoints[index].CharOffset,
-                                (index + length >= data.GlyphPoints.Count ? chars.Length : data.GlyphPoints[index + length].CharOffset) - data.GlyphPoints[index].CharOffset));
-                        foreach (GlyphPoint glyph in extensionGlyphs.GlyphPoints)
+                                data[index].CharOffset,
+                                (index + length >= data.Count ? chars.Length : data[index + length].CharOffset) - data[index].CharOffset));
+                        foreach (GlyphPoint glyph in extensionGlyphs)
                         {
-                            glyph.CharOffset += data.GlyphPoints[index].CharOffset;
+                            glyph.CharOffset += data[index].CharOffset;
                             glyph.GlyphLayoutBuilder = info.ExtensionBuilder;
                         }
-                        data.GlyphPoints[index] = extensionGlyphs.GlyphPoints[0];
-                        data.GlyphPoints.RemoveRange(index + 1, length - 1);
-                        data.GlyphPoints.InsertRange(index + 1, extensionGlyphs.GlyphPoints.Skip(1));
+                        data.Replace(index, length, extensionGlyphs.ToArray());
+                        //data.GlyphPoints[index] = extensionGlyphs.GlyphPoints[0];
+                        //data.GlyphPoints.RemoveRange(index + 1, length - 1);
+                        //data.GlyphPoints.InsertRange(index + 1, extensionGlyphs.GlyphPoints.Skip(1));
                     }
-                }
-                else if (chars[data.GlyphPoints[index].CharOffset] == '\t')
-                {
-                    // replace tabs with space width
-                    data.GlyphPoints[index] = new GlyphPoint
-                    (
-                        glyphIndex: info.DefaultBuilder.SpaceGlyph.GlyphIndex,
-                        charOffset: data.GlyphPoints[index].CharOffset,
-                        width: info.DefaultBuilder.SpaceGlyph.Width,
-                        glyphOffsetX: info.DefaultBuilder.SpaceGlyph.GlyphOffsetX,
-                        glyphOffsetY: info.DefaultBuilder.SpaceGlyph.GlyphOffsetY,
-                        glyphLayoutBuilder: info.DefaultBuilder
-                    );
                 }
                 else
                 {
                     // set builder for other glyph
-                    data.GlyphPoints[index].GlyphLayoutBuilder = info.DefaultBuilder;
+                    data[index].GlyphLayoutBuilder = info.DefaultBuilder;
                 }
                 index--;
             }
 
-            // hide empty glyph and zwj
-            index = data.GlyphPoints.Count - 1;
-            int count = 0;
-            while (index >= 0)
+            if (hideEmptyGlyph)
             {
-                if (data.GlyphPoints[index].GlyphIndex == 0 ||
-                    data.GlyphPoints[index].GlyphIndex == data.GlyphPoints[index].GlyphLayoutBuilder.ZwjIndex)
+                // hide empty glyph and zwj
+                index = data.Count - 1;
+                int count = 0;
+                while (index >= 0)
                 {
-                    count++;
+                    if ((data[index].GlyphIndex == 0 || data[index].GlyphIndex == data[index].GlyphLayoutBuilder.ZwjIndex) && 
+                        chars[data[index].CharOffset] != '\t')
+                    {
+                        count++;
+                    }
+                    else if (count > 0)
+                    {
+                        data.RemoveRange(index + 1, count);
+                        count = 0;
+                    }
+
+                    index--;
                 }
-                else if (count > 0)
+
+                if (count > 0)
                 {
-                    data.GlyphPoints.RemoveRange(index + 1, count);
-                    count = 0;
+                    data.RemoveRange(0, count);
                 }
-                index--;
             }
-            if (count > 0)
+            else
             {
-                data.GlyphPoints.RemoveRange(0, count);
+                // replace empty glyph and zwj
+                index = data.Count - 1;
+                while (index >= 0)
+                {
+                    if ((data[index].GlyphIndex == 0 || data[index].GlyphIndex == data[index].GlyphLayoutBuilder.ZwjIndex) &&
+                        chars[data[index].CharOffset] != '\t')
+                    {
+                        data.Replace(index, new GlyphPoint
+                        (
+                            glyphIndex: info.DefaultBuilder.EmptyGlyph.GlyphIndex,
+                            charOffset: data[index].CharOffset,
+                            width: info.DefaultBuilder.EmptyGlyph.Width,
+                            glyphOffsetX: info.DefaultBuilder.EmptyGlyph.GlyphOffsetX,
+                            glyphOffsetY: info.DefaultBuilder.EmptyGlyph.GlyphOffsetY,
+                            glyphLayoutBuilder: info.DefaultBuilder
+                        ));
+                    }
+
+                    index--;
+                }
             }
-            return data;
+
+            return data.ToArray();
         }
 
         public static IEnumerable<LineInfo> GetLines(IList<GlyphPoint> glyphs, StringCharacterBuffer text, TextTrimming trimming, float maxWidth, float fontSize)
