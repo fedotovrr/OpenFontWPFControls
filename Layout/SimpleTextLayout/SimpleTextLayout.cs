@@ -146,9 +146,9 @@ namespace OpenFontWPFControls.Layout
                 foreach (ParagraphInfo paragraph in TextLayoutLogic.GetParagraphs(_text, 0))
                 {
                     StringCharacterBuffer text = new StringCharacterBuffer(_text, paragraph.CharOffset, paragraph.CharCount);
-                    GlyphLayout glyphLayout = TypefaceInfo.GetGlyphLayout(text);
+                    GlyphPoint[] glyphLayout = TypefaceInfo.GetGlyphLayout(text);
                     IEnumerable<LineInfo> lineInfos = TextLayoutLogic.GetLines(
-                        glyphs:   glyphLayout.GlyphPoints,
+                        glyphs:   glyphLayout,
                         text:     text,
                         trimming: _trimming,
                         maxWidth: _maxWidth,
@@ -157,7 +157,7 @@ namespace OpenFontWPFControls.Layout
                     {
                         SimpleTextLine line = 
                             new SimpleTextLine(this,
-                                glyphLayout.GlyphPoints, 
+                                glyphLayout, 
                                 paragraph.CharOffset + info.CharOffset, 
                                 info.CharsCount, 
                                 info.GlyphOffset,
