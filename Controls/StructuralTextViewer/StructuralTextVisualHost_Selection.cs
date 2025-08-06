@@ -205,18 +205,19 @@ namespace OpenFontWPFControls.Controls
                     }
                     if (current.GlobalCharOffset >= selectionStart)
                     {
-                        if (current.Text.SourceObject != null)
+                        object currentSource = current.Text?.SourceObject;
+                        if (currentSource != null)
                         {
                             if (source == null)
                             {
-                                source = current.Text.SourceObject;
+                                source = currentSource;
                                 offset = current.CharOffset;
                                 length += current.Length;
                             }
-                            else if (current.Text.SourceObject != source)
+                            else if (currentSource != source)
                             {
                                 yield return new ValueTuple<object, int, int>(source, offset, length);
-                                source = current.Text.SourceObject;
+                                source = currentSource;
                                 offset = current.CharOffset; 
                                 length = current.Length;
                             }
@@ -230,4 +231,5 @@ namespace OpenFontWPFControls.Controls
             }
         }
     }
+
 }
