@@ -77,7 +77,7 @@ namespace OpenFontWPFControls.Controls
             CommandManager.RegisterClassInputBinding(typeof(LargeTextBox), new InputBinding(EditingCommands.DeleteNextWord, new KeyGesture(Key.Delete, ModifierKeys.Control)));
         }
 
-        private void CanCommandExecuted(CanExecuteRoutedEventArgs e)
+        public virtual void CanCommandExecuted(CanExecuteRoutedEventArgs e)
         {
             switch (e.Command)
             {
@@ -134,7 +134,7 @@ namespace OpenFontWPFControls.Controls
             }
         }
 
-        private void CommandExecuted(ExecutedRoutedEventArgs e)
+        public virtual void CommandExecuted(ExecutedRoutedEventArgs e)
         {
             switch (e.Command)
             {
@@ -281,3 +281,4 @@ namespace OpenFontWPFControls.Controls
         }
     }
 }
+
