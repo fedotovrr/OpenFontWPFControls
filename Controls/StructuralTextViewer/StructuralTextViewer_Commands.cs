@@ -16,7 +16,7 @@ namespace OpenFontWPFControls.Controls
             CommandManager.RegisterClassCommandBinding(typeof(StructuralTextViewer), CreateCommandBinding(ApplicationCommands.Copy));
         }
 
-        private void CanCommandExecuted(CanExecuteRoutedEventArgs e)
+        public virtual void CanCommandExecuted(CanExecuteRoutedEventArgs e)
         {
             switch (e.Command)
             {
@@ -32,7 +32,7 @@ namespace OpenFontWPFControls.Controls
             }
         }
 
-        private void CommandExecuted(ExecutedRoutedEventArgs e)
+        public virtual void CommandExecuted(ExecutedRoutedEventArgs e)
         {
             switch (e.Command)
             {
@@ -47,3 +47,4 @@ namespace OpenFontWPFControls.Controls
         }
     }
 }
+
