@@ -99,7 +99,10 @@ namespace OpenFontWPFControls.Layout
                 }
             }
             glyphIndex = _typeface.GetGlyphIndex(current, 0, out _);
-            buffer.Add(new GlyphPoint(glyphIndex, curOffset));
+            if (curOffset < chars.Length)
+            {
+                buffer.Add(new GlyphPoint(glyphIndex, curOffset));
+            }
         }
 
         private static int GetCodePoint(CharacterBuffer chars, ref int index)
@@ -152,4 +155,5 @@ namespace OpenFontWPFControls.Layout
         }
 
     }
+
 }
