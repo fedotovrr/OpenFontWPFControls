@@ -169,7 +169,7 @@ namespace OpenFontWPFControls.Layout
         {
             if (_glyphPoints == null && _typefaceInfo != null)
             {
-                if (HitObject is InlineImage img)
+                if (HitObject is IInlineImage img)
                 {
                     FontSize = img.Height / (_typefaceInfo.DefaultBuilder.ClipedAscender / _typefaceInfo.DefaultBuilder.Typeface.UnitsPerEm);
                     _glyphPoints = _typefaceInfo.GetGlyphPoints(new StringCharacterBuffer(Chars));
@@ -219,4 +219,5 @@ namespace OpenFontWPFControls.Layout
         public override string ToString() => $"Text: {Chars}";
     }
 }
+
 
