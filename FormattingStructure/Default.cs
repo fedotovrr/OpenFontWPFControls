@@ -114,6 +114,11 @@ namespace OpenFontWPFControls.FormattingStructure
     {
         public bool Strike => true;
     }
+    
+    public class FontFamily : Inline, IFontFamily
+    {
+        public string FontName { get; set; }
+    }
 
     public class InlineImage : FormattingStructureItem, IInlineImage
     {
@@ -435,3 +440,4 @@ namespace OpenFontWPFControls.FormattingStructure
         }
     }
 }
+
