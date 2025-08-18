@@ -87,7 +87,7 @@ namespace OpenFontWPFControls.Layout
                                 float itemY = item.YOffset;
                                 float itemMaxX = itemX + item.Width;
                                 float itemMaxY = itemY + item.Height;
-                                if (itemX < boundsMaxX && itemMaxX > boundsMinX && itemY < boundsMaxY && itemMaxY > boundsMinY)
+                                if (itemX < boundsMaxX && itemMaxX >= boundsMinX && itemY < boundsMaxY && itemMaxY >= boundsMinY)
                                 {
                                     yield return (T)item;
                                 }
@@ -104,4 +104,5 @@ namespace OpenFontWPFControls.Layout
             return integer < min ? min : integer > max ? max : integer;
         }
     }
+
 }
