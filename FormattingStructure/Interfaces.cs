@@ -75,7 +75,11 @@ namespace OpenFontWPFControls.FormattingStructure
     {
         bool Strike { get; }
     }
-
+    
+    public interface IFontFamily
+    {
+        string FontName { get; }
+    }
 
 
     public interface ITable
@@ -138,3 +142,4 @@ namespace OpenFontWPFControls.FormattingStructure
         public void Navigate();
     }
 }
+
