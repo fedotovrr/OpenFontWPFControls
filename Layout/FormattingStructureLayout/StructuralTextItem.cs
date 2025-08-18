@@ -107,7 +107,7 @@ namespace OpenFontWPFControls.Layout
                 switch (_sourceObject)
                 {
                     case IHyperlink:
-                    case InlineImage:
+                    case IInlineImage:
                         return _sourceObject;
                     default:
                         return null;
@@ -219,3 +219,4 @@ namespace OpenFontWPFControls.Layout
         public override string ToString() => $"Text: {Chars}";
     }
 }
+
