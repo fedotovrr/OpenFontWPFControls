@@ -320,6 +320,11 @@ namespace OpenFontWPFControls.Layout
                     text.Strike = strike.Strike;
                 }
 
+                if (o is IFontFamily font)
+                {
+                    text.FontFamily = font.FontName;
+                }
+                
                 if (o is IInlineImage img)
                 {
                     isDrawObj = true;
@@ -457,4 +462,5 @@ namespace OpenFontWPFControls.Layout
             return lines;
         }
     }
+
 }
