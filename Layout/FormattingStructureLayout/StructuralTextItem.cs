@@ -87,7 +87,7 @@ namespace OpenFontWPFControls.Layout
                     case IHyperlink hyperlink:
                         return hyperlink.Text ?? string.Empty;
                     case IInlineImage:
-                        return "\0";
+                        return " ";
                     default:
                         return string.Empty;
                 }
@@ -219,5 +219,6 @@ namespace OpenFontWPFControls.Layout
         public override string ToString() => $"Text: {Chars}";
     }
 }
+
 
 
