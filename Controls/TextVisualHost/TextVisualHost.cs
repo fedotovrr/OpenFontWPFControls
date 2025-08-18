@@ -46,7 +46,6 @@ namespace OpenFontWPFControls.Controls
 
         public TextVisualHost(Control parentControl, DependencyProperty textProperty)
         {
-            Cursor = Cursors.IBeam;
             _parentControl = parentControl;
             _textProperty = textProperty;
             AddVisualChild(_caret.Visual);
@@ -90,4 +89,5 @@ namespace OpenFontWPFControls.Controls
         }
 
     }
+
 }
