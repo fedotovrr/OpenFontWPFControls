@@ -9,12 +9,12 @@ namespace OpenFontWPFControls.Layout
 {
     public class StructuralBorder : IVisualGenerator, IBorder, IPlacement
     {
-        public readonly SolidColorBrush _background;
-        public readonly SolidColorBrush _borderBrush;
-        public readonly Thickness _borderThickness;
-        public readonly CornerRadius _cornerRadius;
-        public readonly Thickness _margin;
-        public readonly Thickness _padding;
+        private readonly SolidColorBrush _background;
+        private readonly SolidColorBrush _borderBrush;
+        private readonly Thickness _borderThickness;
+        private readonly CornerRadius _cornerRadius;
+        private readonly Thickness _margin;
+        private readonly Thickness _padding;
         public float XOffset;
         public float YOffset;
         public float Width;
@@ -240,3 +240,4 @@ namespace OpenFontWPFControls.Layout
         }
     }
 }
+
