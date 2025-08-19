@@ -87,6 +87,7 @@ namespace OpenFontWPFControls.Controls
                 _layout = new StructuralLayout(
                     structure,
                     _typefaceInfo,
+                    trimming,
                     (float)_maxSize.Width,
                     (float)size,
                     (float)scale.PixelsPerDip,
@@ -322,4 +323,5 @@ namespace OpenFontWPFControls.Controls
         }
 
     }
+
 }
