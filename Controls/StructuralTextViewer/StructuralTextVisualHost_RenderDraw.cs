@@ -17,6 +17,7 @@ namespace OpenFontWPFControls.Controls
 
         public void Invalidate()
         {
+            _layout?.UpdateContainers();
             Render();
             InvalidateMeasure();
             InvalidateVisual();
@@ -325,3 +326,4 @@ namespace OpenFontWPFControls.Controls
     }
 
 }
+
