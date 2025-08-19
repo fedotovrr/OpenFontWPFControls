@@ -130,7 +130,7 @@ namespace OpenFontWPFControls.Layout
 
         public int ContainersCount => _containers.Count;
 
-        private void UpdateContainers()
+        public void UpdateContainers()
         {
             _containers = MaxWidth > 0 ? _structure.GetContainers(this, out _width, out _height).ToList() : new List<StructuralContainer>();
             int globalOffset = 0;
@@ -258,3 +258,4 @@ namespace OpenFontWPFControls.Layout
     }
 
 }
+
