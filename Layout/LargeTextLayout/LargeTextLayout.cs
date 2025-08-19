@@ -28,6 +28,7 @@ namespace OpenFontWPFControls.Layout
         public LargeTextLayout(
             string text = null,
             TypefaceInfo typefaceInfo = null,
+            TextTrimming trimming = TextTrimming.None,
             float maxWidth = float.MaxValue,
             float fontSize = 14,
             float pixelsPerDip = 1,
@@ -37,6 +38,7 @@ namespace OpenFontWPFControls.Layout
             bool strike = false)
         {
             _typefaceInfo = typefaceInfo ?? new TypefaceInfo();
+            _trimming = trimming;
             _maxWidth = maxWidth;
             _fontSize = fontSize;
             _pixelsPerDip = pixelsPerDip;
@@ -455,3 +457,4 @@ namespace OpenFontWPFControls.Layout
         }
     }
 }
+
