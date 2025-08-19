@@ -10,16 +10,16 @@ namespace OpenFontWPFControls
     {
         public static SolidColorBrush ErrorLineBrush = new SolidColorBrush(Color.FromRgb(255, 90, 90));
 
-        public static DrawingGroup DrawText(string text, string fontFamily = TypefaceInfo.DefaultFontFamily, FontStyle style = default, FontWeight weight = default, string fontFamilyExtension = null, float maxWidth = float.MaxValue, float fontSize = 14, Brush defaultForeground = null, float pixelsPerDip = 1, float pixelsPerInchX = 96, bool setGuidelines = true)
+        public static DrawingGroup DrawText(string text, string fontFamily = TypefaceInfo.DefaultFontFamily, FontStyle style = default, FontWeight weight = default, string fontFamilyExtension = null, TextTrimming trimming = TextTrimming.None, float maxWidth = float.MaxValue, float fontSize = 14, Brush defaultForeground = null, float pixelsPerDip = 1, float pixelsPerInchX = 96, bool setGuidelines = true)
         {
-            return TypefaceInfo.CacheGetOrTryCreate(fontFamily, style, weight, fontFamilyExtension)?.DrawText(text, maxWidth, fontSize, defaultForeground, pixelsPerDip, pixelsPerInchX, setGuidelines);
+            return TypefaceInfo.CacheGetOrTryCreate(fontFamily, style, weight, fontFamilyExtension)?.DrawText(text, trimming, maxWidth, fontSize, defaultForeground, pixelsPerDip, pixelsPerInchX, setGuidelines);
         }
 
-        public static DrawingGroup DrawText(this TypefaceInfo typefaceInfo, string text, float maxWidth = float.MaxValue, float fontSize = 14, Brush defaultForeground = null, float pixelsPerDip = 1, float pixelsPerInchX = 96, bool setGuidelines = true)
+        public static DrawingGroup DrawText(this TypefaceInfo typefaceInfo, string text, TextTrimming trimming, float maxWidth = float.MaxValue, float fontSize = 14, Brush defaultForeground = null, float pixelsPerDip = 1, float pixelsPerInchX = 96, bool setGuidelines = true)
         {
             DrawingGroup drawing = new DrawingGroup();
             using DrawingContext context = drawing.Open();
-            LargeTextLayout data = new LargeTextLayout(text, typefaceInfo, maxWidth, fontSize, pixelsPerDip, pixelsPerInchX);
+            LargeTextLayout data = new LargeTextLayout(text, typefaceInfo, trimming, maxWidth, fontSize, pixelsPerDip, pixelsPerInchX);
             foreach ((GlyphPoint glyph, float x) in data.GlyphPoints)
             {
                 DrawGlyph(context, glyph, data.FontSize, data.PixelsPerDip, data.Foreground, data.Underline, data.Strike, false, x, 0, setGuidelines);
@@ -129,3 +129,4 @@ namespace OpenFontWPFControls
         }
     }
 }
+
