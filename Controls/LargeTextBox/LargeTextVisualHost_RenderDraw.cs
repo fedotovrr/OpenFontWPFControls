@@ -315,7 +315,7 @@ namespace OpenFontWPFControls.Controls
 
                             caret.Height = line.Height;
                             caret.CaretBrush = brush;
-                            caret.Margin = new Thickness(Math.Min(current.X, _viewWidth), y, 0, 0);
+                            caret.Margin = new Thickness(Math.Min(current.X, _viewWidth - caret.Width), y, 0, 0);
                             _caretVisible = true;
 
                             return;
@@ -377,5 +377,6 @@ namespace OpenFontWPFControls.Controls
     }
 
 }
+
 
 
