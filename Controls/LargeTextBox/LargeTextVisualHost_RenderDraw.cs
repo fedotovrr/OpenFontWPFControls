@@ -111,7 +111,7 @@ namespace OpenFontWPFControls.Controls
             }
 
             _caretPoint.Owner = CaretPointOwners.Anyone;
-            _caretPoint = _layout.CaretPointContains(_caretPoint.CharOffset) ? _caretPoint : _layout.LastCaretPoint;
+            _caretPoint = _layout.CheckCaretPoint(_caretPoint);
             _selectionCapture = _caretPoint;
             SetStartChar(_startCharOffset, false);
             _drawingValid = false;
@@ -315,7 +315,7 @@ namespace OpenFontWPFControls.Controls
 
                             caret.Height = line.Height;
                             caret.CaretBrush = brush;
-                            caret.Margin = new Thickness(current.X, y, 0, 0);
+                            caret.Margin = new Thickness(Math.Min(current.X, _maxSize.Width), y, 0, 0);
                             _caretVisible = true;
 
                             return;
@@ -377,3 +377,4 @@ namespace OpenFontWPFControls.Controls
     }
 
 }
+
