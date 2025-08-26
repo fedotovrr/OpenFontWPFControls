@@ -54,7 +54,16 @@ namespace OpenFontWPFControls.Layout
                 float width = 0;
                 foreach (GlyphInfo info in GlyphPoints)
                 {
-                    last = info.Glyph.GlyphIndex == info.Glyph.GlyphLayoutBuilder.SpaceGlyph.GlyphIndex ? last + info.Width : 0;
+                    bool isAllWhiteSpace = true;
+                    for (int i = info.Glyph.CharOffset + info.CharsCount - 1; i >= info.Glyph.CharOffset; i--)
+                    {
+                        if (!char.IsWhiteSpace(info.Text.Chars[i]))
+                        {
+                            isAllWhiteSpace = false;
+                            break;
+                        }
+                    }
+                    last = isAllWhiteSpace ? last + info.Width : 0;
                     width += info.Width;
                 }
                 _width = width - last;
@@ -195,3 +204,4 @@ namespace OpenFontWPFControls.Layout
         public override string ToString() => $"GlyphOffset: {GlyphOffset:0000} GlyphCount: {GlyphsCount:0000} X: {XOffset:000.0} Y: {YOffset:000.0} Text: {Text}";
     }
 }
+
