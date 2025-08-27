@@ -14,18 +14,44 @@ namespace OpenFontWPFControls.Controls
             if (delta > 0)
             {
                 CaretPoint start = _visualHost.CaretPoint;
-                if (!ReplaceSelected() && start.CharOffset < Text.Length && _visualHost.GetCaretPoint(start, delta, out CaretPoint end))
+                if (!ReplaceSelected() && start.CharOffset < Text.Length)
                 {
-                    TextReplacer(start.CharOffset, end.CharOffset - start.CharOffset);
+                    CaretPoint end;
+                    bool andAny = _visualHost.GetCaretPoint(start, delta, out end);
+                    while (andAny)
+                    {
+                        if (end.CharOffset > start.CharOffset)
+                        {
+                            break;
+                        }
+                        andAny = _visualHost.GetCaretPoint(end, delta, out end);
+                    }
+                    if (andAny)
+                    {
+                        TextReplacer(start.CharOffset, end.CharOffset - start.CharOffset);
+                    }
                 }
             }
             else if (delta < 0)
             {
                 CaretPoint end = _visualHost.CaretPoint;
-                if (!ReplaceSelected() && end.CharOffset > 0 && _visualHost.ChangeCaretPosition(delta))
+                if (!ReplaceSelected() && end.CharOffset > 0)
                 {
+                    bool startAny = _visualHost.ChangeCaretPosition(delta);
                     CaretPoint start = _visualHost.CaretPoint;
-                    TextReplacer(start.CharOffset, end.CharOffset - start.CharOffset);
+                    while (startAny)
+                    {
+                        if (end.CharOffset > start.CharOffset)
+                        {
+                            break;
+                        }
+                        startAny = _visualHost.ChangeCaretPosition(delta);
+                        start = _visualHost.CaretPoint;
+                    }
+                    if (startAny)
+                    {
+                        TextReplacer(start.CharOffset, end.CharOffset - start.CharOffset);
+                    }
                 }
             }
             else
@@ -128,3 +154,4 @@ namespace OpenFontWPFControls.Controls
     }
 
 }
+
