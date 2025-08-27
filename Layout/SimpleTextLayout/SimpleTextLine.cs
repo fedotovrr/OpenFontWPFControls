@@ -40,11 +40,40 @@ namespace OpenFontWPFControls.Layout
 
         public float Height => Layout.FontHeight;
 
-        public float Width => GetWidth();
+        public float Width => _width ?? (_width = Layout.TextTrimming == TextTrimming.None ? GetWidth() : GetWidthWithoutLastSpace()).Value;
 
         private float GetWidth()
         {
-            return _width ?? (_width = Glyphs.Sum(glyph => glyph.GetPixelWidth(Layout.FontSize))).Value;
+            return Glyphs.Sum(glyph => glyph.GetPixelWidth(Layout.FontSize));
+        }
+
+        private float GetWidthWithoutLastSpace()
+        {
+            float last = 0;
+            float width = 0;
+            int glyphIndex = GlyphOffset;
+            int count = GlyphsCount;
+            while (count > 0)
+            {
+                GlyphPoint glyph = _glyphPoints[glyphIndex];
+                float glyphWidth = glyph.GetPixelWidth(Layout.FontSize);
+                int glyphCharsCount = (glyphIndex + 1 < GlyphsCount ? _glyphPoints[glyphIndex + 1].CharOffset : CharsCount) - _glyphPoints[glyphIndex].CharOffset;
+                bool isAllWhiteSpace = true; 
+                for (int i = glyph.CharOffset + glyphCharsCount - 1; i >= glyph.CharOffset; i--)
+                {
+                    if (!char.IsWhiteSpace(Layout.Text[i]))
+                    {
+                        isAllWhiteSpace = false;
+                        break;
+                    }
+                }
+                last = isAllWhiteSpace ? last + glyphWidth : 0;
+                width += glyphWidth;
+                count--;
+                glyphIndex++;
+            }
+            width -= last;
+            return width;
         }
 
         public bool CaretPointContains(int charOffset)
@@ -168,3 +197,4 @@ namespace OpenFontWPFControls.Layout
         public override string ToString() => $"GlyphCount: {GlyphsCount:0000} X: {0:000.0} Y: {YOffset:000.0} Text: {Text}";
     }
 }
+
