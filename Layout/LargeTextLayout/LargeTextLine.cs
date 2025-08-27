@@ -34,7 +34,41 @@ namespace OpenFontWPFControls.Layout
 
         public float Height => Paragraph.TextLayout.FontHeight;
 
-        public float Width => _width ?? (_width = Glyphs.Sum(glyph => glyph.GetPixelWidth(Paragraph.TextLayout.FontSize))).Value;
+        public float Width => _width ?? (_width = GetWidth()).Value;
+
+        private float GetWidth()
+        {
+            return Glyphs.Sum(glyph => glyph.GetPixelWidth(Paragraph.TextLayout.FontSize));
+        }
+
+        private float GetWidthWithoutLastSpace()
+        {
+            float last = 0;
+            float width = 0;
+            int glyphIndex = GlyphOffset;
+            int count = GlyphCount;
+            while (count > 0)
+            {
+                GlyphPoint glyph = Paragraph.GlyphsLayout[glyphIndex];
+                float glyphWidth = glyph.GetPixelWidth(Paragraph.TextLayout.FontSize);
+                int glyphCharsCount = (glyphIndex + 1 < GlyphCount ? Paragraph.GlyphsLayout[glyphIndex + 1].CharOffset : CharCount) - Paragraph.GlyphsLayout[glyphIndex].CharOffset;
+                bool isAllWhiteSpace = true;
+                for (int i = glyph.CharOffset + glyphCharsCount - 1; i >= glyph.CharOffset; i--)
+                {
+                    if (!char.IsWhiteSpace(Paragraph.TextLayout.Text[i]))
+                    {
+                        isAllWhiteSpace = false;
+                        break;
+                    }
+                }
+                last = isAllWhiteSpace ? last + glyphWidth : 0;
+                width += glyphWidth;
+                count--;
+                glyphIndex++;
+            }
+            width -= last;
+            return width;
+        }
 
         public int GlobalCharOffset => Paragraph.CharOffset + CharOffset;
 
@@ -148,4 +182,5 @@ namespace OpenFontWPFControls.Layout
 
         public override string ToString() => $"CharOffset: {GlobalCharOffset:0000} Length: {CharCount}";
     }
+
 }
