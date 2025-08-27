@@ -134,8 +134,10 @@ namespace OpenFontWPFControls.Controls
 
         private void CaretArrange()
         {
-            double x = Math.Min(_maxSize.Width - _caret.Control.Width, _caretPoint.X - _drawingOffset.X);
             double y = _caretPoint.Y - _drawingOffset.Y;
+            double x = _layout.TextTrimming == TextTrimming.None ?
+                Math.Min(_viewWidth - _caret.Control.Width - _drawingOffset.X, _caretPoint.X - _drawingOffset.X) : 
+                Math.Min(_maxSize.Width - _caret.Control.Width, _caretPoint.X - _drawingOffset.X);
             _caret.Location = new Point(x, y);
             _caret.Arrange();
         }
@@ -351,5 +353,6 @@ namespace OpenFontWPFControls.Controls
     }
 
 }
+
 
 
