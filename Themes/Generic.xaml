@@ -72,8 +72,11 @@
                                   Margin="{TemplateBinding Padding}"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
-                                  ClipToBounds="True"
-                                  Cursor="IBeam" />
+                                  ClipToBounds="True" />
+                <Border Grid.Row="0"
+                        Grid.Column="0"
+                        Background="Transparent"
+                        Cursor="IBeam" />
                 <ScrollBar x:Name="PART_VerticalScroll"
                            Grid.Row="0"
                            Grid.Column="1"
@@ -252,3 +255,4 @@
     <!--#endregion-->
 
 </ResourceDictionary>
+
