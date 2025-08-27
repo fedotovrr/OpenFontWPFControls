@@ -60,6 +60,11 @@ namespace OpenFontWPFControls.Controls
 
         private void TextReplacer(int offset, int length, string value = "")
         {
+            if (length == 0 && string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+            
             TextChangedEventArgs eventArgs;
             if (_lastChangeOffset + 1 == offset && _lastChangeLength == 1 && value.Length == 1 && length == 0 && value != "\n")
             {
@@ -121,4 +126,5 @@ namespace OpenFontWPFControls.Controls
 
 
     }
+
 }
